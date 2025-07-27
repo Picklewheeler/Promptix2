@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
   const navItems = [{
     name: 'Dashboard',
     href: '/dashboard',
@@ -53,7 +54,7 @@ const Navbar = () => {
               <Link 
                 key={item.name}
                 to={item.href}
-                className="px-2.5 py-2 text-sm leading-5 font-sans text-white transition-opacity hover:opacity-80 font-normal"
+                className={`px-2.5 py-2 text-sm leading-5 font-sans text-white transition-opacity hover:opacity-80 font-normal ${location.pathname === item.href ? 'opacity-100 font-medium' : 'opacity-80'}`}
               >
                 {item.name}
               </Link>
@@ -63,11 +64,13 @@ const Navbar = () => {
 
         {/* Get Started Button - Desktop */}
         <div className="hidden lg:block">
-          <Button className="px-4 py-2.5 text-sm font-semibold leading-5 text-white rounded-xl border border-white/32 font-sans" style={{
-            background: 'linear-gradient(180deg, #6445F5 0%, #4128BA 100%)'
-          }}>
-            Get Started
-          </Button>
+          <Link to="/auth">
+            <Button className="px-4 py-2.5 text-sm font-semibold leading-5 text-white rounded-xl border border-white/32 font-sans" style={{
+              background: 'linear-gradient(180deg, #6445F5 0%, #4128BA 100%)'
+            }}>
+              Get Started
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -81,17 +84,24 @@ const Navbar = () => {
             <SheetContent side="right" className="w-[300px] bg-[#15161a]/95 border-white/12 backdrop-blur-[20px]">
               <div className="flex flex-col space-y-6 mt-8">
                 {navItems.map(item => (
-                  <button key={item.name} className="text-left px-4 py-3 text-base text-white font-semibold transition-opacity hover:opacity-80" onClick={() => setIsOpen(false)}>
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-left px-4 py-3 text-base text-white font-semibold transition-opacity hover:opacity-80"
+                    onClick={() => setIsOpen(false)}
+                  >
                     {item.name}
-                  </button>
+                  </Link>
                 ))}
                 
                 <div className="px-4 pt-4">
-                  <Button className="w-full px-4 py-3 text-sm font-semibold text-white rounded-xl border border-white/32" style={{
-                    background: 'linear-gradient(180deg, #6445F5 0%, #4128BA 100%)'
-                  }} onClick={() => setIsOpen(false)}>
-                    Get Started
-                  </Button>
+                  <Link to="/auth">
+                    <Button className="w-full px-4 py-3 text-sm font-semibold text-white rounded-xl border border-white/32" style={{
+                      background: 'linear-gradient(180deg, #6445F5 0%, #4128BA 100%)'
+                    }} onClick={() => setIsOpen(false)}>
+                      Get Started
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </SheetContent>
