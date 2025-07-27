@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navItems = [{
-    name: 'Features',
-    active: true
-  }, {
-    name: 'Pricing',
+    name: 'Dashboard',
+    href: '/dashboard',
     active: false
   }, {
-    name: 'Blog',
+    name: 'Services',
+    href: '/services',
     active: false
   }, {
-    name: 'About Us',
+    name: 'Products',
+    href: '/products',
+    active: false
+  }, {
+    name: 'Employee Portal',
+    href: '/employee-portal',
+    active: false
+  }, {
+    name: 'About',
+    href: '/about',
     active: false
   }, {
     name: 'Contact',
+    href: '/contact',
     active: false
   }];
 
@@ -31,7 +41,7 @@ const Navbar = () => {
         {/* Logo and Brand */}
         <div className="flex items-center gap-7">
           <div className="flex items-center gap-3">
-            <h1 className="text-white text-lg font-semibold leading-7 font-sans">FlowFin</h1>
+            <h1 className="text-white text-lg font-semibold leading-7 font-sans">Promptix</h1>
           </div>
           
           {/* Vertical Divider - Hidden on mobile */}
@@ -40,9 +50,13 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex flex-1 justify-between items-center gap-8">
             {navItems.map(item => (
-              <button key={item.name} className="px-2.5 py-2 text-sm leading-5 font-sans text-white transition-opacity hover:opacity-80 font-normal">
+              <Link 
+                key={item.name}
+                to={item.href}
+                className="px-2.5 py-2 text-sm leading-5 font-sans text-white transition-opacity hover:opacity-80 font-normal"
+              >
                 {item.name}
-              </button>
+              </Link>
             ))}
           </div>
         </div>
