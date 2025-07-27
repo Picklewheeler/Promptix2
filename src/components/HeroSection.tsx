@@ -65,7 +65,7 @@ const HeroSection = () => {
                 className="w-full text-center text-white text-3xl md:text-5xl lg:text-6xl font-normal leading-tight md:leading-none break-words font-sans"
                 variants={itemVariants}
               >
-                Enhance your financial<br />control with FlowFin
+                Enhance your financial<br />control with Promptix
               </motion.h1>
               <motion.p 
                 className="w-full text-center text-white text-base md:text-lg font-normal leading-relaxed break-words font-sans"

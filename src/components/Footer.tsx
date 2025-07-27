@@ -7,7 +7,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="w-full lg:w-96 flex flex-col justify-start items-start gap-8">
             <div className="flex justify-start items-center gap-1.5">
-              <div className="text-gray-100 text-xl font-semibold leading-[30px] font-sans">FlowFin</div>
+              <div className="text-gray-100 text-xl font-semibold leading-[30px] font-sans">Promptix</div>
               <div className="px-1 py-1.5 bg-transparent rounded border-2 border-indigo-400 flex justify-center items-center">
                 <div className="text-indigo-600 text-xs font-bold leading-[10px] font-sans">LAND</div>
               </div>
