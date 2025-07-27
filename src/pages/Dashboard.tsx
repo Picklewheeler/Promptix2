@@ -1,6 +1,16 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar, CreditCard, BarChart2, Plus, FileText } from "lucide-react";
+import { useAuth } from "../hooks/useAuth";
+import { Navigate } from "react-router-dom";
 
 export default function Dashboard() {
+  const { user, isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
+  }
   return (
     <div className="p-6">
       {/* Stats Overview */}

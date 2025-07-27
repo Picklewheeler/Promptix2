@@ -1,45 +1,72 @@
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { useState } from 'react';
 import { Card } from "@/components/ui/card";
-import { supabase } from '../lib/supabase'
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useAuth } from "../lib/auth";
+import { useNavigate } from "react-router-dom";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function AuthPage() {
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    
+    const result = await login(usernameOrEmail, password);
+    if (result.success) {
+      navigate('/dashboard');
+    } else {
+      setError(result.error || 'An error occurred during login');
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-white dark:from-gray-900 dark:to-gray-800">
-      <Card className="w-[400px] p-6 space-y-4 shadow-xl">
+      <Card className="w-[400px] p-6 space-y-6 shadow-xl">
         <div className="space-y-2 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight">Welcome to Promptix</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">Employee Portal</h1>
           <p className="text-sm text-muted-foreground">Sign in to continue</p>
         </div>
-        <Auth
-          supabaseClient={supabase}
-          appearance={{
-            theme: ThemeSupa,
-            variables: {
-              default: {
-                colors: {
-                  brand: 'hsl(var(--primary))',
-                  brandAccent: 'hsl(var(--primary))',
-                },
-              },
-            },
-            style: {
-              button: {
-                fontWeight: '600',
-                borderRadius: '0.5rem',
-                padding: '0.75rem 1rem',
-              },
-              input: {
-                borderRadius: '0.5rem',
-              },
-              anchor: {
-                color: 'hsl(var(--primary))',
-              },
-            },
-          }}
-          providers={['google', 'github']}
-          redirectTo={`${window.location.origin}/dashboard`}
-        />
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="usernameOrEmail">Username or Email</Label>
+            <Input
+              id="usernameOrEmail"
+              placeholder="Enter your username or email"
+              value={usernameOrEmail}
+              onChange={(e) => setUsernameOrEmail(e.target.value)}
+              required
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          {error && (
+            <Alert variant="destructive">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+
+          <Button type="submit" className="w-full">
+            Sign In
+          </Button>
+        </form>
       </Card>
     </div>
   );
